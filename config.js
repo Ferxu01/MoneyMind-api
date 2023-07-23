@@ -1,10 +1,8 @@
-export const PORT = 3000;
-
 const DB_OPTIONS = {
     host: 'localhost',
-    database: 'moneyminder',
-    user: undefined,
-    password: undefined,
+    database: 'moneymind',
+    user: 'root',
+    password: '',
 };
 
 module.exports = {
