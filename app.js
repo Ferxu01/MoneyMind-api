@@ -3,6 +3,7 @@ const express = require('express');
 
 const routerTransaccion = require('./routes/transaccion.routes');
 const routerCuenta = require('./routes/cuenta.routes');
+const routerAuth = require('./routes/auth.routes');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 
 app.use('/transaccion', routerTransaccion);
 app.use('/cuenta', routerCuenta);
+app.use('/auth', routerAuth);
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);

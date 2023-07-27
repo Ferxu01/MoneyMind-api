@@ -1,10 +1,12 @@
 const express = require('express');
 const conexion = require('../db');
 
+const { auth } = require('../middlewares/auth.middleware');
+
 const router = express.Router();
 
 // Definir las rutas y los controladores correspondientes
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
   res.send('Listado de transacciones');
 
   conexion.query('SELECT * FROM transaccion', (error, results, fields) => {
@@ -18,7 +20,7 @@ router.get('/', (req, res) => {
 });
 
 // Realizar una transaccion (Ingreso/Gasto)
-router.post('/:idCuenta', (req, res) => {
+router.post('/:idCuenta', auth, (req, res) => {
   const body = req.body;
   const params = req.params;
 
