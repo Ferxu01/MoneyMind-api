@@ -1,13 +1,13 @@
 const jwt = require('jwt-simple');
 const moment = require('moment');
 
-const { SECRET, EXP_TIME } = require('../config').TOKEN;
+const { SECRET, TOKEN_EXP_TIME } = require('../config').TOKEN;
 
 function generaToken(usuario) {
     const payload = {
         sub: usuario.id,
         iat: moment().unix(),
-        exp: moment().add(EXP_TIME, 'minutes').unix()
+        exp: moment().add(TOKEN_EXP_TIME, 'minutes').unix()
     };
 
     return jwt.encode(payload, SECRET);

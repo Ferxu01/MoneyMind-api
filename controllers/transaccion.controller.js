@@ -1,5 +1,6 @@
-const { catchedAsync, response, responseError } = require('../utils');
+const { catchedAsync, responseError, responseMessage, response } = require('../utils');
 const { transaccionService } = require('../services');
+const generaPdf = require('../utils/pdf');
 
 const postTransaccion = async (req, res) => {
     const { usuario, importe, tipo } = req.body;
@@ -7,13 +8,11 @@ const postTransaccion = async (req, res) => {
 
     if (usuario && importe && tipo) {
         const result = await transaccionService.postNuevaTransaccion({usuario, importe, tipo});
-        console.log(result);
 
         if (result.insertId > 0) {
-            const result2 = await transaccionService.updateSaldoCuenta({idCuenta, importe, usuario, tipo});
-            console.log(result2);
-            if (result2.changedRows > 0) {
-                response(res, 200, { message: 'La transacción se realizó correctamente' });
+            const resultUpd = await transaccionService.updateSaldoCuenta({idCuenta, importe, usuario, tipo});
+            if (resultUpd.changedRows > 0) {
+                responseMessage(res, 200, 'La transacción se realizó correctamente');
             }
         } else {
             responseError(res, 400, 'No se ha encontrado la cuenta a la que hacer la transacción');
@@ -21,6 +20,12 @@ const postTransaccion = async (req, res) => {
     }
 };
 
+const getInformeTransaccion = async (req, res) => {
+    const result = await generaPdf();
+    response(res, 200, result);
+};
+
 module.exports = {
-    postTransaccion: catchedAsync(postTransaccion)
+    postTransaccion: catchedAsync(postTransaccion),
+    getInformeTransaccion: catchedAsync(getInformeTransaccion)
 };

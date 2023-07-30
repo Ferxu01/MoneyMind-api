@@ -3,5 +3,6 @@ module.exports = {
     response: require('./response'),
     responseAuth: require('./responseAuth'),
     responseError: require('./responseError'),
+    responseMessage: require('./responseMessage'),
     errors: require('./errors')
 };

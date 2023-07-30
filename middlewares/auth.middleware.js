@@ -21,11 +21,7 @@ function auth(req, res, next) {
             return next();
         })
         .catch(resp => {
-            res.status(resp.status);
-            res.json({
-                result: 'KO',
-                message: resp.message
-            });
+            responseError(res, resp.status, resp.message);
         });
 }
 

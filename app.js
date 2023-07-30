@@ -8,6 +8,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Templates engine
+app.set('view engine', 'pug');
+
 app.get('/', (req, res) => {
   res.send('¡Hola, mundo!');
 });

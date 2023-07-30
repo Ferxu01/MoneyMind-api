@@ -5,6 +5,8 @@ const { transaccionController } = require('../controllers');
 
 const router = express.Router();
 
+router.get('/informeGastos', transaccionController.getInformeTransaccion);
+
 // Definir las rutas y los controladores correspondientes
 router.get('/', auth, (req, res) => {
   res.send('Listado de transacciones');
@@ -20,6 +22,6 @@ router.get('/', auth, (req, res) => {
 });
 
 // Realizar una transaccion (Ingreso/Gasto)
-router.post('/:idCuenta', transaccionController.postTransaccion);
+router.post('/:idCuenta', auth, transaccionController.postTransaccion);
 
 module.exports = router;
