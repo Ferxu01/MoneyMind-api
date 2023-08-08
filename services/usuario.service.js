@@ -1,13 +1,10 @@
 const conexion = require('../db');
 
-const postNuevaCuenta = (idUsuario, {nombreCuenta, estado, moneda}) => {
+const getUserLogueado = (id) => {
     return new Promise((resolve, reject) => {
-        conexion.query(
-            `INSERT INTO cuenta (nombre_cuenta, estado, moneda, usuario_id) 
-            VALUES ('${nombreCuenta}','${estado}','${moneda}',${idUsuario})`, 
-            (error, results, fields) => {
+        conexion.query(`SELECT * FROM usuario WHERE id_usuario = ${id}`, (error, results, fields) => {
             if (error) reject(error);
-            resolve(results);
+            resolve(results[0]);
         });
     });
 };
@@ -22,6 +19,5 @@ const deleteCuenta = (idCuenta, idUsuario) => {
 };
 
 module.exports = {
-    postNuevaCuenta,
-    deleteCuenta
+    getUserLogueado
 };

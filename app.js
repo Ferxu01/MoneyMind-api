@@ -1,6 +1,7 @@
 const { PORT } = require('./config');
 const express = require('express');
 const { errorHandler } = require('./middlewares/errors.middleware');
+const { responseError } = require('./utils');
 
 const app = express();
 
@@ -16,6 +17,11 @@ app.get('/', (req, res) => {
 });
 
 app.use(require('./routes'));
+
+//Si una ruta/servicio no se encuentra
+app.use((req, res) => {
+  responseError(res, 404, 'Esta ruta no existe');
+});
 
 app.use(errorHandler);
 

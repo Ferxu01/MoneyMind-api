@@ -5,7 +5,9 @@ const { transaccionController } = require('../controllers');
 
 const router = express.Router();
 
-router.get('/informeGastos', transaccionController.getInformeTransaccion);
+router.get('/informe', auth, transaccionController.getInformeTransaccion);
+
+router.get('/informe/:idCuenta/semanal', auth, transaccionController.getTransaccionesSemanales);
 
 // Definir las rutas y los controladores correspondientes
 router.get('/', auth, (req, res) => {

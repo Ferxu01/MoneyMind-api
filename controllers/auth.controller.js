@@ -2,8 +2,9 @@ const PassHelper = require('../helpers/pass.helper');
 const TokenHelper = require('../helpers/token.helper');
 
 const { authService } = require('../services');
-const { catchedAsync, response, responseError, responseAuth } = require('../utils');
+const { catchedAsync, responseError, responseAuth } = require('../utils');
 const { DataNotFoundError } = require('../utils/errors');
+const { usuarioDto } = require('../dto');
 
 
 const postRegistro = async (req, res) => {
@@ -23,13 +24,18 @@ const postRegistro = async (req, res) => {
             apellidos,
             pass: encPass
         };
+        console.log(usuario);
 
         const insertResult = await authService.postRegistraUser(usuario);
-        console.log(insertResult);
-
         usuario.id = insertResult.insertId;
-        let token = TokenHelper.generaToken(usuario);
-        responseAuth(res, 200, token, usuario);
+
+        // APLICAR DTO USUARIO
+        const resp = usuarioDto.single(usuario);
+        console.log(resp);
+
+        //usuario.id = insertResult.insertId;
+        let token = TokenHelper.generaToken(resp);
+        responseAuth(res, 200, token, resp);
     }
 };
 

@@ -4,5 +4,6 @@ module.exports = {
     responseAuth: require('./responseAuth'),
     responseError: require('./responseError'),
     responseMessage: require('./responseMessage'),
-    errors: require('./errors')
+    errors: require('./errors'),
+    helpersSql: require('./helpersSql')
 };

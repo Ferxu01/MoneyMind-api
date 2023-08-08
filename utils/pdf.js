@@ -1,10 +1,12 @@
 const pdf = require('html-pdf');
 const pug = require('pug');
 
-const generaPdf = () => {
-    const htmlOutput = pug.renderFile('./views/pdf.pug', {
-        name: 'Fernando',
-        cuenta: 'Cuenta 1'
+const generaPdf = (usuario) => {
+    let nombreCompleto = usuario.nombre + ' ' + usuario.apellidos;
+    const htmlOutput = pug.renderFile('./views/index.pug', {
+        usuario,
+        nombreCompleto,
+        diferencia: '80€'
     });
 
     return new Promise((resolve, reject) => {

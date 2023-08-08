@@ -1,19 +1,30 @@
 const conexion = require('../db');
 
-const postNuevaTransaccion = ({usuario, importe, tipo}) => {
+const getTransaccionesSemanales = (idUsuario, fechaIniSemana) => {
     return new Promise((resolve, reject) => {
-        conexion.query(
-        `INSERT INTO transaccion (usuario_id, importe, tipo) VALUES (${usuario}, ${importe}, '${tipo}')`, (error, results, fields) => {
+        conexion.query(`
+            SELECT * FROM transaccion WHERE usuario_id = ${idUsuario} AND WEARWEEK(fecha, 1) = YEARWEEK(${fechaIniSemana}, 1)`
+        , (error, results, fields) => {
             if (error) reject(error);
             resolve(results);
         });
     });
 };
 
-const updateSaldoCuenta = ({idCuenta, importe, usuario, tipo}) => {
+const postNuevaTransaccion = (idUsuario, {importe, tipo, descripcion}) => {
     return new Promise((resolve, reject) => {
-        let sqlIngreso = `UPDATE cuenta SET saldo = saldo+${importe} WHERE usuario_id = ${usuario} AND num_cuenta = ${idCuenta}`;
-        let sqlGasto = `UPDATE cuenta SET saldo = saldo-${importe} WHERE usuario_id = ${usuario} AND num_cuenta = ${idCuenta}`;
+        conexion.query(
+        `INSERT INTO transaccion (usuario_id, importe, tipo, descripcion) VALUES (${idUsuario}, ${importe}, '${tipo}', '${descripcion}')`, (error, results, fields) => {
+            if (error) reject(error);
+            resolve(results);
+        });
+    });
+};
+
+const updateSaldoCuenta = (idUsuario, {idCuenta, importe, tipo}) => {
+    return new Promise((resolve, reject) => {
+        let sqlIngreso = `UPDATE cuenta SET saldo = saldo+${importe} WHERE usuario_id = ${idUsuario} AND num_cuenta = ${idCuenta}`;
+        let sqlGasto = `UPDATE cuenta SET saldo = saldo-${importe} WHERE usuario_id = ${idUsuario} AND num_cuenta = ${idCuenta}`;
 
         conexion.query(tipo === 'INGRESO' ? sqlIngreso : sqlGasto, 
         (error, results, fields) => {
@@ -24,6 +35,7 @@ const updateSaldoCuenta = ({idCuenta, importe, usuario, tipo}) => {
 };
 
 module.exports = {
+    getTransaccionesSemanales,
     postNuevaTransaccion,
     updateSaldoCuenta
 };
