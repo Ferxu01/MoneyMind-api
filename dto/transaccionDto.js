@@ -1,8 +1,12 @@
+const { formateaFecha } = require('../helpers/fecha.helper');
+
+
 const singleObj = (recurso) => ({
-    importe: recurso.importe,
+    importe: Number(recurso.importe),
     descripcion: recurso.descripcion,
-    fecha_realizada: Date(recurso.fecha),
-    tipo: recurso.tipo === 1 ? 'INGRESO' : 'GASTO'
+    fecha: formateaFecha(recurso.fecha, 'YYYY-MM-DD'),
+    tipo: recurso.tipo
+    //tipo: recurso.tipo === 1 ? 'INGRESO' : 'GASTO'
 });
 
 const multipleDto = (recursos) => recursos.map(res => singleObj(res));

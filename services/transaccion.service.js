@@ -1,9 +1,9 @@
 const conexion = require('../db');
 
-const getTransaccionesSemanales = (idUsuario, fechaIniSemana) => {
+const getTransaccionesSemanales = (idUsuario, idCuenta, fecha) => {
     return new Promise((resolve, reject) => {
         conexion.query(`
-            SELECT * FROM transaccion WHERE usuario_id = ${idUsuario} AND WEARWEEK(fecha, 1) = YEARWEEK(${fechaIniSemana}, 1)`
+            SELECT * FROM transaccion WHERE usuario_id = ${idUsuario} AND cuenta_id = ${idCuenta} AND YEARWEEK(fecha, 1) = YEARWEEK('${fecha}', 1)`
         , (error, results, fields) => {
             if (error) reject(error);
             resolve(results);
@@ -11,10 +11,10 @@ const getTransaccionesSemanales = (idUsuario, fechaIniSemana) => {
     });
 };
 
-const postNuevaTransaccion = (idUsuario, {importe, tipo, descripcion}) => {
+const postNuevaTransaccion = (idUsuario, idCuenta, {importe, tipo, descripcion}) => {
     return new Promise((resolve, reject) => {
         conexion.query(
-        `INSERT INTO transaccion (usuario_id, importe, tipo, descripcion) VALUES (${idUsuario}, ${importe}, '${tipo}', '${descripcion}')`, (error, results, fields) => {
+        `INSERT INTO transaccion (usuario_id, cuenta_id, importe, tipo, descripcion) VALUES (${idUsuario}, ${idCuenta}, ${importe}, '${tipo}', '${descripcion}')`, (error, results, fields) => {
             if (error) reject(error);
             resolve(results);
         });

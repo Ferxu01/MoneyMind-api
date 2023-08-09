@@ -62,8 +62,7 @@ html(lang="es")
   body
     .header
       h1 Informe de Registro de Transacciones
-      .date Fecha: 31 de Julio de 2023
-
+      .date Fecha: #{fechaInicial} a #{fechaFinal}
     .user-info
       h2 Datos del Usuario
       p Nombre: #{nombreCompleto}
@@ -74,15 +73,17 @@ html(lang="es")
         tr
           th Fecha
           th Descripción
-          th Monto
+          th Tipo
+          th Importe
       tbody
         each transaccion in transacciones
           tr
             td #{transaccion.fecha}
             td #{transaccion.descripcion}
-            td #{transaccion.precio} €
+            td #{transaccion.tipo}
+            td #{transaccion.importe} €
 
       tfoot
         tr
           td(colspan="2" class="total") Total
-          td.total $430.00
+          td.total #{diferencia} €

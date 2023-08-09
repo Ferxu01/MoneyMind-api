@@ -5,6 +5,7 @@ const postCuenta = async (req, res) => {
     const {nombreCuenta, estado, moneda} = req.body;
     const { id } = req.user;
     const result = await cuentaService.postNuevaCuenta(id, {nombreCuenta,estado,moneda});
+
     if (result) {
         responseMessage(res, 200, 'Cuenta creada correctamente');
     }
