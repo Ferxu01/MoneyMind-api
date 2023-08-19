@@ -3,7 +3,7 @@ const pug = require('pug');
 const { getInicioFinalSemana } = require('../helpers/fecha.helper');
 const { getTotalDiferencia } = require('../helpers/informe.helper');
 
-const generaPdf = (usuario, transacciones) => {
+const generaPdf = (usuario, transacciones, cuenta) => {
     let nombreCompleto = usuario.nombre + ' ' + usuario.apellidos;
 
     //FORMATEO DE FECHAS SEMANALES
@@ -13,13 +13,16 @@ const generaPdf = (usuario, transacciones) => {
         usuario,
         nombreCompleto,
         transacciones,
+        cuenta,
         fechaInicial,
         fechaFinal,
         diferencia: getTotalDiferencia(transacciones),
     });
 
+    let nombrePdf = `informe_semana_${fechaInicial}-${usuario.nombre}`;
+
     return new Promise((resolve, reject) => {
-        pdf.create(htmlOutput).toFile(__dirname+'/../pdfs/informe.pdf', (err, res) => {
+        pdf.create(htmlOutput).toFile(__dirname+`/../pdfs/${nombrePdf}.pdf`, (err, res) => {
             if (err) reject(err);
             else resolve(res);
         });

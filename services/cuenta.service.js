@@ -1,5 +1,14 @@
 const conexion = require('../db');
 
+const getCuentaById = (idCuenta, idUsuario) => {
+    return new Promise((resolve, reject) => {
+        conexion.query(`SELECT * FROM cuenta WHERE usuario_id = ${idUsuario} AND num_cuenta = ${idCuenta}`, (error, results, fields) => {
+            if (error) reject(error);
+            resolve(results[0]);
+        });
+    });
+};
+
 const postNuevaCuenta = (idUsuario, {nombreCuenta, estado, moneda}) => {
     return new Promise((resolve, reject) => {
         conexion.query(
@@ -22,6 +31,7 @@ const deleteCuenta = (idCuenta, idUsuario) => {
 };
 
 module.exports = {
+    getCuentaById,
     postNuevaCuenta,
     deleteCuenta
 };

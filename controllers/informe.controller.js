@@ -1,5 +1,5 @@
 const { catchedAsync, responseError, responseMessage, response } = require('../utils');
-const { transaccionService, usuarioService } = require('../services');
+const { transaccionService, usuarioService, cuentaService } = require('../services');
 const { multipleDto, single } = require('../dto/transaccionDto');
 const generaPdf = require('../utils/pdf');
 
@@ -10,12 +10,13 @@ const getInformeTransaccionesSemanales = async (req, res) => {
 
     if (fecha) {
         const transacciones = await transaccionService.getTransaccionesSemanales(id, idCuenta, fecha);
+        const cuenta = await cuentaService.getCuentaById(idCuenta, id);
 
         if (transacciones.length > 0) {
             let dtoTransacciones = multipleDto(transacciones);
-            
+
             const usuario = await usuarioService.getUserLogueado(id);
-            const result = await generaPdf(usuario, dtoTransacciones);
+            const result = await generaPdf(usuario, dtoTransacciones, cuenta);
             response(res, 200, result);
         }
     }

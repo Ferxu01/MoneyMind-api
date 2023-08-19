@@ -68,6 +68,9 @@ html(lang="es")
       p Nombre: #{nombreCompleto}
       p DNI: #{usuario.dni}
 
+    .header
+      h3 Cuenta: #{cuenta.nombre_cuenta}
+
     table
       thead
         tr
@@ -85,5 +88,5 @@ html(lang="es")
 
       tfoot
         tr
-          td(colspan="2" class="total") Total
+          td(colspan="3" class="total") Total
           td.total #{diferencia} €
