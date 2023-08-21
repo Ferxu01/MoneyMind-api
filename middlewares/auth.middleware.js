@@ -1,5 +1,5 @@
-const TokenHelper = require('../helpers/token.helper');
-const { responseError } = require('../utils');
+import { decodificaToken } from '../helpers/token.helper.js';
+import { responseError } from '../utils/index.js';
 
 function auth(req, res, next) {
     if (!req.headers.authorization) {
@@ -11,7 +11,7 @@ function auth(req, res, next) {
         responseError(res, 401, 'Token de acceso JWT no encontrado en la cabecera [Authorization: Bearer jwtToken]');
     }
 
-    TokenHelper.decodificaToken(token)
+    decodificaToken(token)
         .then(userId => {
             req.user = {
                 id: userId,
@@ -25,6 +25,6 @@ function auth(req, res, next) {
         });
 }
 
-module.exports = {
+export {
     auth
 };

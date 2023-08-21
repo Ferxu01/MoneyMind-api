@@ -1,6 +1,11 @@
-module.exports = {
-    authController: require('./auth.controller'),
-    cuentaController: require('./cuenta.controller'),
-    transaccionController: require('./transaccion.controller'),
-    informeController: require('./informe.controller')
-}
+import authController from './auth.controller.js';
+import cuentaController from './cuenta.controller.js';
+import transaccionController from './transaccion.controller.js';
+import informeController from './informe.controller.js';
+
+export {
+    authController,
+    cuentaController,
+    transaccionController,
+    informeController
+};

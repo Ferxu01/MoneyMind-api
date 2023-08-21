@@ -8,14 +8,11 @@ function generaSentenciaInsert(tabla, params) {
                             .map(valor => serializaParametro(valor))
                             .join(', ');
 
-
-    //const valores = Object.values(params).join(', ');
-
     const sql = `INSERT INTO ${tabla} (${campos}) VALUES (${valores})`;
 
     return sql;
 }
 
-module.exports = {
+export default {
     generaSentenciaInsert
 };

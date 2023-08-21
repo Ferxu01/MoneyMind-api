@@ -1,7 +1,7 @@
-const { catchedAsync, responseError, responseMessage, response } = require('../utils');
-const { transaccionService, usuarioService, cuentaService } = require('../services');
-const { multipleDto, single } = require('../dto/transaccionDto');
-const generaPdf = require('../utils/pdf');
+import { catchedAsync, responseError, responseMessage, response } from '../utils/index.js';
+import { transaccionService, usuarioService, cuentaService } from '../services/index.js';
+import { transaccionDto } from '../dto/index.js';
+import { generaPdf } from '../utils/pdf.js';
 
 const getInformeTransaccionesSemanales = async (req, res) => {
     const { id } = req.user;
@@ -13,7 +13,7 @@ const getInformeTransaccionesSemanales = async (req, res) => {
         const cuenta = await cuentaService.getCuentaById(idCuenta, id);
 
         if (transacciones.length > 0) {
-            let dtoTransacciones = multipleDto(transacciones);
+            let dtoTransacciones = transaccionDto.multiple(transacciones);
 
             const usuario = await usuarioService.getUserLogueado(id);
             const result = await generaPdf(usuario, dtoTransacciones, cuenta);
@@ -28,7 +28,7 @@ const getInformeTransaccion = async (req, res) => {
     response(res, 200, result);
 };
 
-module.exports = {
+export default {
     getInformeTransaccionesSemanales: catchedAsync(getInformeTransaccionesSemanales),
     getInformeTransaccion: catchedAsync(getInformeTransaccion)
 };

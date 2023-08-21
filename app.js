@@ -1,7 +1,8 @@
-const { PORT } = require('./config');
-const express = require('express');
-const { errorHandler } = require('./middlewares/errors.middleware');
-const { responseError } = require('./utils');
+import { PORT } from './config.js';
+import express from 'express';
+import { errorHandler } from './middlewares/errors.middleware.js';
+import { responseError } from './utils/index.js';
+import routes from './routes/index.js';
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.get('/', (req, res) => {
   res.send('¡Hola, mundo!');
 });
 
-app.use(require('./routes'));
+app.use(routes);
 
 //Si una ruta/servicio no se encuentra
 app.use((req, res) => {

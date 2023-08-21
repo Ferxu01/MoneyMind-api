@@ -11,6 +11,6 @@ const getTotalDiferencia = (transacciones) => {
     return total;
 };
 
-module.exports = {
+export {
     getTotalDiferencia
 };

@@ -1,8 +1,8 @@
-const express = require('express');
-const { cuentaController } = require('../controllers');
-const { auth } = require('../middlewares/auth.middleware');
+import { Router } from 'express';
+import { cuentaController } from '../controllers/index.js';
+import { auth } from '../middlewares/auth.middleware.js';
 
-const router = express.Router();
+const router = Router();
 
 //Dar de alta una nueva cuenta a un usuario
 router.post('/', auth, cuentaController.postCuenta);
@@ -10,4 +10,4 @@ router.post('/', auth, cuentaController.postCuenta);
 //Eliminar una cuenta del usuario activo
 router.delete('/:idCuenta', auth, cuentaController.deleteCuenta);
 
-module.exports = router;
+export default router;

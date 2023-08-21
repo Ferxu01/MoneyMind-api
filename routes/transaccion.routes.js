@@ -1,27 +1,10 @@
-const express = require('express');
-const conexion = require('../db');
-const { auth } = require('../middlewares/auth.middleware');
-const { transaccionController } = require('../controllers');
+import { Router } from 'express';
+import { auth } from '../middlewares/auth.middleware.js';
+import { transaccionController } from '../controllers/index.js';
 
-const router = express.Router();
-
-//router.get('/informe', auth, transaccionController.getInformeTransaccion);
-
-// Definir las rutas y los controladores correspondientes
-router.get('/', auth, (req, res) => {
-  res.send('Listado de transacciones');
-
-  conexion.query('SELECT * FROM transaccion', (error, results, fields) => {
-    if(error)
-        throw error;
-    
-    results.forEach(row => {
-        console.log(row.importe);
-    });
-  });
-});
+const router = Router();
 
 // Realizar una transaccion (Ingreso/Gasto)
 router.post('/:idCuenta', auth, transaccionController.postTransaccion);
 
-module.exports = router;
+export default router;

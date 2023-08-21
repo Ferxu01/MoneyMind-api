@@ -1,5 +1,5 @@
-const { catchedAsync, responseError, responseMessage } = require('../utils');
-const { cuentaService } = require('../services')
+import { catchedAsync, responseError, responseMessage } from '../utils/index.js';
+import { cuentaService } from '../services/index.js';
 
 const postCuenta = async (req, res) => {
     const {nombreCuenta, estado, moneda} = req.body;
@@ -24,7 +24,7 @@ const deleteCuenta = async (req, res) => {
     }
 };
 
-module.exports = {
+export default {
     postCuenta: catchedAsync(postCuenta),
     deleteCuenta: catchedAsync(deleteCuenta)
 };

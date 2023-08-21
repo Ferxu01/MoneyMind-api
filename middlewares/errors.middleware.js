@@ -1,10 +1,6 @@
-const { responseError } = require('../utils');
+import { responseError } from '../utils/index.js';
 
-const errorHandler = (error, req, res, next) => {
+export const errorHandler = (error, req, res, next) => {
     const { statusCode, message } = error;
     responseError(res, statusCode, message);
-};
-
-module.exports = {
-    errorHandler
 };

@@ -1,10 +1,10 @@
-const singleObj = (recurso) => ({
+const single = (recurso) => ({
     
 });
 
-const multipleDto = (recursos) => recursos.map(res => singleObj(res));
+const multiple = (recursos) => recursos.map(res => single(res));
 
-module.exports = {
-    single: singleObj,
-    multipleDto
+export default {
+    single,
+    multiple
 };

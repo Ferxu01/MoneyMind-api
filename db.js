@@ -1,6 +1,6 @@
-const { DB } = require('./config');
+import { DB } from './config.js';
+import mysql from 'mysql';
 
-const mysql = require('mysql');
 const conexion = mysql.createConnection({
     host: DB.host,
     database: DB.database,
@@ -17,4 +17,4 @@ conexion.connect(err => {
     console.log('Conectado con el id ' + conexion.threadId);
 });
 
-module.exports = conexion;
+export default conexion;

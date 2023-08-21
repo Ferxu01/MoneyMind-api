@@ -1,4 +1,4 @@
-const conexion = require('../db');
+import conexion from '../db.js';
 
 const getTransaccionesSemanales = (idUsuario, idCuenta, fecha) => {
     return new Promise((resolve, reject) => {
@@ -34,7 +34,7 @@ const updateSaldoCuenta = (idUsuario, {idCuenta, importe, tipo}) => {
     });
 };
 
-module.exports = {
+export default {
     getTransaccionesSemanales,
     postNuevaTransaccion,
     updateSaldoCuenta

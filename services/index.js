@@ -1,6 +1,11 @@
-module.exports = {
-    authService: require('./auth.service'),
-    cuentaService: require('./cuenta.service'),
-    transaccionService: require('./transaccion.service'),
-    usuarioService: require('./usuario.service')
+import authService from './auth.service.js';
+import cuentaService from './cuenta.service.js';
+import transaccionService from './transaccion.service.js';
+import usuarioService from './usuario.service.js';
+
+export {
+    authService,
+    cuentaService,
+    transaccionService,
+    usuarioService
 };

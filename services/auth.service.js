@@ -1,5 +1,5 @@
-const conexion = require('../db');
-const { helpersSql } = require('../utils');
+import conexion from '../db.js';
+import { helpersSql } from '../utils/index.js';
 
 const getUsersByDni = (dni) => {
     return new Promise((resolve, reject) => {
@@ -32,7 +32,7 @@ const postLoginUser = ({dni, pass}) => {
     });
 };
 
-module.exports = {
+export default {
     getUsersByDni,
     postRegistraUser,
     postLoginUser

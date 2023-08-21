@@ -1,14 +1,14 @@
-const bcrypt = require('bcrypt');
+import { hash as _hash, compare } from 'bcrypt';
 
 function encriptaPassword(password) {
-    return bcrypt.hash(password, 10);
+    return _hash(password, 10);
 }
 
 function comparaPassword(password, hash) {
-    return bcrypt.compare(password, hash);
+    return compare(password, hash);
 }
 
-module.exports = {
+export {
     encriptaPassword,
     comparaPassword
 };

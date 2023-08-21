@@ -1,9 +1,9 @@
-const pdf = require('html-pdf');
-const pug = require('pug');
-const { getInicioFinalSemana } = require('../helpers/fecha.helper');
-const { getTotalDiferencia } = require('../helpers/informe.helper');
+import pdf from 'html-pdf';
+import pug from 'pug';
+import { getInicioFinalSemana } from '../helpers/fecha.helper.js';
+import { getTotalDiferencia } from '../helpers/informe.helper.js';
 
-const generaPdf = (usuario, transacciones, cuenta) => {
+export const generaPdf = (usuario, transacciones, cuenta) => {
     let nombreCompleto = usuario.nombre + ' ' + usuario.apellidos;
 
     //FORMATEO DE FECHAS SEMANALES
@@ -28,5 +28,3 @@ const generaPdf = (usuario, transacciones, cuenta) => {
         });
     });
 };
-
-module.exports = generaPdf;

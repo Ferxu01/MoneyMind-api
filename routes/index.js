@@ -1,9 +1,15 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
 
-router.use('/auth', require('./auth.routes'));
-router.use('/transaccion', require('./transaccion.routes'));
-router.use('/cuenta', require('./cuenta.routes'));
-router.use('/informe', require('./informe.routes'));
+const router = Router();
 
-module.exports = router;
+import authRoute from './auth.routes.js';
+import transaccionRoute from './transaccion.routes.js';
+import cuentaRoute from './cuenta.routes.js';
+import informeRoute from './informe.routes.js';
+
+router.use('/auth', authRoute);
+router.use('/transaccion', transaccionRoute);
+router.use('/cuenta', cuentaRoute);
+router.use('/informe', informeRoute);
+
+export default router;

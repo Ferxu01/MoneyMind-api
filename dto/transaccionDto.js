@@ -1,7 +1,7 @@
-const { formateaFecha } = require('../helpers/fecha.helper');
+import { formateaFecha } from '../helpers/fecha.helper.js';
 
 
-const singleObj = (recurso) => ({
+const single = (recurso) => ({
     importe: Number(recurso.importe),
     descripcion: recurso.descripcion,
     fecha: formateaFecha(recurso.fecha, 'YYYY-MM-DD'),
@@ -9,9 +9,9 @@ const singleObj = (recurso) => ({
     //tipo: recurso.tipo === 1 ? 'INGRESO' : 'GASTO'
 });
 
-const multipleDto = (recursos) => recursos.map(res => singleObj(res));
+const multiple = (recursos) => recursos.map(res => single(res));
 
-module.exports = {
-    single: singleObj,
-    multipleDto
+export default {
+    single,
+    multiple
 };

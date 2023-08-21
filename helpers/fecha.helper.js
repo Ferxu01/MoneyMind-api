@@ -1,4 +1,4 @@
-const moment = require('moment');
+import moment from 'moment';
 
 const formateaFecha = (fecha, formato) => {
     return moment(fecha).format(formato);
@@ -15,7 +15,7 @@ const getInicioFinalSemana = (fechaRef) => {
     };
 };
 
-module.exports = {
+export {
     formateaFecha,
     getInicioFinalSemana
 };

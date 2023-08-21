@@ -1,4 +1,4 @@
-const conexion = require('../db');
+import conexion from '../db.js';
 
 const getCuentaById = (idCuenta, idUsuario) => {
     return new Promise((resolve, reject) => {
@@ -30,7 +30,7 @@ const deleteCuenta = (idCuenta, idUsuario) => {
     });
 };
 
-module.exports = {
+export default {
     getCuentaById,
     postNuevaCuenta,
     deleteCuenta

@@ -1,9 +1,9 @@
-const express = require('express');
-const { informeController } = require('../controllers');
-const { auth } = require('../middlewares/auth.middleware');
+import { Router } from 'express';
+import { informeController } from '../controllers/index.js';
+import { auth } from '../middlewares/auth.middleware.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/:idCuenta/semanal', auth, informeController.getInformeTransaccionesSemanales);
 
-module.exports = router;
+export default router;

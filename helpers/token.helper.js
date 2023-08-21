@@ -1,11 +1,12 @@
-const jwt = require('jwt-simple');
-const moment = require('moment');
+import jwt from 'jwt-simple';
+import moment from 'moment';
 
-const { SECRET, TOKEN_EXP_TIME } = require('../config').TOKEN;
+import { TOKEN } from '../config.js';
+const { SECRET, TOKEN_EXP_TIME } = TOKEN;
 
 function generaToken(usuario) {
     const payload = {
-        sub: usuario.id,
+        sub: usuario.id_usuario,
         iat: moment().unix(),
         exp: moment().add(TOKEN_EXP_TIME, 'minutes').unix()
     };
@@ -34,7 +35,7 @@ function decodificaToken(token) {
     });
 }
 
-module.exports = {
+export {
     generaToken,
     decodificaToken
 };

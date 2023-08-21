@@ -1,5 +1,5 @@
-const { catchedAsync, responseError, responseMessage, response } = require('../utils');
-const { transaccionService } = require('../services');
+import { catchedAsync, responseError, responseMessage, response } from '../utils/index.js';
+import { transaccionService } from '../services/index.js';
 
 const postTransaccion = async (req, res) => {
     const { id } = req.user;
@@ -20,6 +20,6 @@ const postTransaccion = async (req, res) => {
     }
 };
 
-module.exports = {
-    postTransaccion: catchedAsync(postTransaccion),
+export default {
+    postTransaccion: catchedAsync(postTransaccion)
 };
