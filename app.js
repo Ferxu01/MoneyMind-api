@@ -4,18 +4,18 @@ import { errorHandler } from './middlewares/errors.middleware.js';
 import { responseError } from './utils/index.js';
 import routes from './routes/index.js';
 
+import cors from './middlewares/cors.js';
+
 const app = express();
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cors);
+
 // Templates engine
 app.set('view engine', 'pug');
-
-app.get('/', (req, res) => {
-  res.send('¡Hola, mundo!');
-});
 
 app.use(routes);
 
