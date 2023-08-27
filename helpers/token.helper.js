@@ -6,7 +6,7 @@ const { SECRET, TOKEN_EXP_TIME } = TOKEN;
 
 function generaToken(usuario) {
     const payload = {
-        sub: usuario.id_usuario,
+        sub: usuario.id,
         iat: moment().unix(),
         exp: moment().add(TOKEN_EXP_TIME, 'minutes').unix()
     };

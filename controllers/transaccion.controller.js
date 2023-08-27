@@ -1,22 +1,31 @@
-import { catchedAsync, responseError, responseMessage, response } from '../utils/index.js';
-import { transaccionService } from '../services/index.js';
+import { catchedAsync, responseError, responseMessage } from '../utils/index.js';
+import { cuentaService, transaccionService } from '../services/index.js';
+import { transaccionSchema } from '../schemas/index.js';
 
 const postTransaccion = async (req, res) => {
+    const validatedResult = await transaccionSchema.validateTransaccion(req.body);
+
+    if (validatedResult.error)
+        return responseError(res, 400, JSON.parse(validatedResult.error.message));
+        
     const { id } = req.user;
-    const { importe, tipo, descripcion } = req.body;
     const { idCuenta } = req.params;
 
-    if (importe && tipo && descripcion) {
-        const result = await transaccionService.postNuevaTransaccion(id, idCuenta, {importe, tipo, descripcion});
+    // COMPROBAR SI EXISTE LA CUENTA CON EL ID
+    const cuenta = await cuentaService.getCuentaById(idCuenta, id);
+    if (!cuenta)
+        return responseError(res, 400, 'No existe una cuenta con ese id o la cuenta no te pertenece');
 
-        if (result.insertId > 0) {
-            const resultUpd = await transaccionService.updateSaldoCuenta(id, {idCuenta, importe, tipo});
-            if (resultUpd.changedRows > 0) {
-                responseMessage(res, 200, 'La transacción se realizó correctamente');
-            }
-        } else {
-            responseError(res, 400, 'No se ha encontrado la cuenta a la que hacer la transacción');
+    const result = await transaccionService.postNuevaTransaccion(id, idCuenta, validatedResult.data);
+
+    if (result.insertId > 0) {
+        const { importe, tipo } = validatedResult.data;
+        const resultUpd = await transaccionService.updateSaldoCuenta(id, {idCuenta, importe, tipo});
+        if (resultUpd.changedRows > 0) {
+            responseMessage(res, 200, 'La transacción se realizó correctamente');
         }
+    } else {
+        responseError(res, 400, 'No se ha encontrado la cuenta a la que hacer la transacción');
     }
 };
 

@@ -8,17 +8,24 @@ const getInformeTransaccionesSemanales = async (req, res) => {
     const { idCuenta } = req.params;
     const { fecha } = req.body;
 
-    if (fecha) {
-        const transacciones = await transaccionService.getTransaccionesSemanales(id, idCuenta, fecha);
-        const cuenta = await cuentaService.getCuentaById(idCuenta, id);
+    const cuenta = await cuentaService.getCuentaById(idCuenta, id);
+    if (!cuenta)
+        return responseError(res, 400, 'La cuenta no existe o no te pertenece');
 
-        if (transacciones.length > 0) {
-            let dtoTransacciones = transaccionDto.multiple(transacciones);
-
-            const usuario = await usuarioService.getUserLogueado(id);
-            const result = await generaPdf(usuario, dtoTransacciones, cuenta);
-            response(res, 200, result);
-        }
+    const transacciones = await transaccionService.getTransaccionesSemanales(id, idCuenta, fecha);
+    if (transacciones.length === 0)
+        return responseError(res, 400, 'No has realizado transacciones durante esta semana');
+    else {
+        let dtoTransacciones = transaccionDto.multiple(transacciones);
+        
+        const usuario = await usuarioService.getUserLogueado(id);
+        
+        const result = await generaPdf(usuario, dtoTransacciones, cuenta);
+        res.sendFile(result.filename, {}, error => {
+            if (error)
+                return responseError(res, 500, 'Error al enviar el pdf como respuesta');
+        });
+        //response(res, 200, result);
     }
 };
 

@@ -9,11 +9,11 @@ const getCuentaById = (idCuenta, idUsuario) => {
     });
 };
 
-const postNuevaCuenta = (idUsuario, {nombreCuenta, estado, moneda}) => {
+const postNuevaCuenta = (idUsuario, {nombreCuenta, moneda}) => {
     return new Promise((resolve, reject) => {
         conexion.query(
-            `INSERT INTO cuenta (nombre_cuenta, estado, moneda, usuario_id) 
-            VALUES ('${nombreCuenta}','${estado}','${moneda}',${idUsuario})`, 
+            `INSERT INTO cuenta (nombre_cuenta, moneda, usuario_id) 
+            VALUES ('${nombreCuenta}','${moneda}',${idUsuario})`, 
             (error, results, fields) => {
             if (error) reject(error);
             resolve(results);

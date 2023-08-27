@@ -2,7 +2,7 @@ import conexion from '../db.js';
 
 const getUserLogueado = (id) => {
     return new Promise((resolve, reject) => {
-        conexion.query(`SELECT * FROM usuario WHERE id_usuario = ${id}`, (error, results, fields) => {
+        conexion.query(`SELECT * FROM usuario WHERE id = ${id}`, (error, results, fields) => {
             if (error) reject(error);
             resolve(results[0]);
         });
