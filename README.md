@@ -1,17 +1,18 @@
-# Backend CRUD API REST
+# Backend MoneyMind API
 
-_Se trata de un Servicio Web de tipo RESTful concretamente creado con NodeJS y Express. Este WS proporciona un API CRUD para gestionar una base de datos MongoDB._
+_Se trata de un Servicio Web de tipo RESTful creado con NodeJS y Express. Este WS proporciona un API para gestionar una base de datos mysql sobre un sistema de registro de transacciones._
 
 _En la siguiente tabla se muestran todas las rutas (**endpoints**) del API RESTful:_
 
 Verbo HTTP | Ruta | Descripción
 --------: | :------- | :--------
-<span style="color:green">GET</span> | /api | Obtenemos todas las colecciones existentes en la DB.
-<span style="color:green">GET</span> | /api/\{coleccion\} | Obtenemos todos los elementos de la tabla \{coleccion\}.
-<span style="color:green">GET</span> | /api/\{coleccion\}/\{id\} | Obtenemos el elemento indicado en \{id\} de la tabla \{coleccion\}.
-<span style="color:yellow">POST</span> | /api/\{coleccion\} | Creamos un nuevo elemento en la tabla \{coleccion\}.
-<span style="color:blue">PUT</span> | /api/\{coleccion\}/\{id\} | Modificamos el elemento \{id\} de la tabla \{coleccion\}.
-<span style="color:red">DELETE</span> | /api/\{coleccion\}/\{id\} | Eliminamos el elemento \{id\} de la tabla \{coleccion\}.
+<span style="color:yellow">POST</span> | /auth/registro | Registramos un usuario en el sistema.
+<span style="color:yellow">POST</span> | /auth/login | Logueamos un usuario del sistema.
+<span style="color:yellow">POST</span> | /cuenta | Crear una nueva cuenta perteneciente a un usuario.
+<span style="color:red">DELETE</span> | /cuenta/\{id\} | Eliminamos una cuenta determinada.
+<span style="color:yellow">POST</span> | /transaccion/\{id\} | Creamos una nueva transacción en la cuenta con id \{id\}.
+<span style="color:green">GET</span> | /informe/\{id\}/semanal | Obtenemos el informe semanal de la cuenta \{id\} en una semana determinada.
+
 
 ## Comenzando 🚀
 
@@ -34,15 +35,9 @@ wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubun
 sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 ```
 
-_Igualmente se debe tener instalada la DB **MongoDB** y asegurarnos que está lanzada..._
+_Igualmente se debe tener instalada **mysql** y asegurarnos que está lanzada. Para ello tendremos que instalar xampp en nuestro sistema y activar los servicios de apache y mysql..._
 
-```sh
-wget -qO - https://www.mongodb.org/statis/pgp/server-4.4.asc | sudo apt-key add -
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
-sudo apt-get update
-sudo apt-get install -y mongodb-org=4.4.15 mongodb-org-server=4.4.15 mongodb-org-shell=4.4.15 mongodb-org-mongos=4.4.15 mongodb-org-tools=4.4.15
-sudo systemctl start mongod
-```
+Se puede instalar xampp a través de este enlace: https://www.apachefriends.org/es/download.html
 
 ### Instalación 🔧
 
@@ -51,13 +46,13 @@ _En esta sección veremos cómo instalar y configurar el entorno de desarrollo p
 _En primer lugar, debemos clonar el proyecto desde nuestro repositorio._
 
 ```sh
-git clone https://fojo1@bitbucket.org/proyectosnode/api-rest.git
+git clone https://github.com/Ferxu01/MoneyMind-api.git
 ```
 
 _Una vez clonado el repositorio, debemos instalar y actualizar todas las bibliotecas de código y dependencias del proyecto._
 
 ```sh
-cd api-rest
+cd MoneyMind-api
 npm i
 ```
 
@@ -73,64 +68,29 @@ _El archivo `crud.postman_collection.json` contiene una colección de pruebas pa
 
 _Para poder emplearlo desde **Postman**, bastará con importar el archivo y, si fuera necesario, modificar el puerto de escucha del servidor._
 
-<!-- ## Ejecutando las pruebas ⚙️
-
-_Explica cómo ejecutar las pruebas automatizadas para este sistema._
-
-### Analice las pruebas end-to-end 🔩
-
-_Explica qué verifican estas pruebas y por qué_
-
-```
-Proporciona un ejemplo
-```
-
-### Y las pruebas de estilo de codificación ⌨️
-
-_Explica qué verifican estas pruebas y por qué_
-
-```
-Proporciona un ejemplo
-``` -->
-
-<!-- ## Despliegue 📦
-
-_Agrega notas adicionales sobre cómo hacer deploy._ -->
-
 ## Construido con 🛠️
 
-* [Express](https://expressjs.com/es/) - Infraestructura de aplicaciones web Node.js mí­nima y flexible que proporciona un conjunto sólido de caracterí­sticas para las aplicaciones web y móviles.
-* [mongodb](https://www.mongodb.com/docs/drivers/node/current/) - official MongoDB Node.js driver. You can add the driver to your application to work with MongoDB in JavaScript.
-* [mongojs](github.com/mongo-js/mongojs#readme) - official MongoDB Node.js driver. You can add the driver to your application to work with MongoDB in JavaScript.
-* [cors](github.com/expressjs/cors#readme) - CORS es un paquete de node.js que ofrece un middleware de Express para ser usado para habilitar CORS con distintas opciones.
-* [helmet](helmetjs.github.io/) - Helmet te ayuda con tus aplicaciones Express configurando varias cabeceras HTTP.
-* [morgan](github.com/expressjs/morgan#readme) - HTTP request logger middleware for node.js.
+* [express](https://expressjs.com/es/) - Infraestructura de aplicaciones web Node.js mí­nima y flexible que proporciona un conjunto sólido de caracterí­sticas para las aplicaciones web y móviles.
+* [cors](https://www.npmjs.com/package/cors) - CORS es un paquete de node.js que ofrece un middleware de Express para ser usado para habilitar CORS con distintas opciones.
+* [bcrypt](https://www.npmjs.com/package/bcrypt) - Una biblioteca para encriptar las contraseñas.
+* [mysql](https://www.npmjs.com/package/mysql) - Un driver de node.js para utilizar en base de datos mysql. Escrito en Javascript.
 * [nodemon](https://www.npmjs.com/package/nodemon) - Herramienta que ayuda a desarrollar aplicaciones basadas en node.js reiniciando automáticamente la aplicación de node cuando se detectan cambios de archivos en el directorio.
 * [jwt-simple](https://www.npmjs.com/package/jwt-simple) - JWT (JSON Web Token) encode and decode module for node.js.
-* [moment](https://www.npmjs.com/package/moment) - A JavaScript date library for parsing, validating, manipulating, and formatting dates.
-
-<!-- ## Contribuyendo 🖇️
-
-Por favor lee el [CONTRIBUTING.md](https://gist.github.com/tu/tuProyecto) para detalles de nuestro código de conducta, y el proceso para enviarnos pull requests.
-
-## Wiki 📖
-
-Puedes encontrar mucho más de cómo utilizar este proyecto en nuestra [Wiki](https://github.com/tu/proyecto/wiki) -->
+* [moment](https://www.npmjs.com/package/moment) - Una biblioteca de javascript para manipular y formatear fechas.
+* [html-pdf](https://www.npmjs.com/package/html-pdf) - Una biblioteca para generar ficheros en formato pdf utilizando sintaxis html y javascript 
+* [pug](https://www.npmjs.com/package/pug) - Motor de plantillas versátil para crear páginas dinámicas usando Node.js.
+* [zod](https://www.npmjs.com/package/zod) - Herramienta para crear schemas y validar datos.
 
 ## Versionado 📌
 
-Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones disponibles, mira los [tags en este repositorio](https://bitbucket.org/proyectosnode/api-rest/commits/).
-
-En este repositorio se pueden encontrar la evolución del proyecto desde la estructura básica de un servicio, hasta un servicio CRUD completo con comunicación HTTPS:
+En este repositorio se pueden encontrar la evolución del proyecto desde la estructura básica de un servicio, hasta un servicio completo con comunicación HTTP:
 
 tag     | Descripción
 ------- | ------------------------------------------
-v1.0.25 | API Rest Hola Mundo.
-v2.0.0  | API Rest CRUD (sin DB).
-v3.0.0  | API Rest CRUD (con DB MongoDB).
-v3.1.0  | API REST CRUD con MongoDB (CORS y auth).
-v3.2.0  | API REST CRUD con MongoDB (https y helmet).
-v4.0.0  | API REST CRUD con MongoDB y autenticación con JWT.
+v1.0.0 | Creación y configuración básica del servidor.
+v2.0.0  | Implementación de base de datos mysql en la API.
+v3.0.0  | Implementación del servicio AUTH (Registro y login de usuario)
+v3.1.0  | Implementación del servicio de generación del informe en formato pdf.
 
 ## Autores ✒️
 
